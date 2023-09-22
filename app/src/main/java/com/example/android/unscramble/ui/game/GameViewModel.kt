@@ -37,7 +37,7 @@ class GameViewModel : ViewModel() {
     val currentWordCount: LiveData<Int>
         get() = _currentWordCount
 
-    private val _currentScrambledWord = MutableLiveData<String>()
+    private var _currentScrambledWord = MutableLiveData<String>()
     val currentScrambledWord: LiveData<Spannable> = Transformations.map(_currentScrambledWord) {
         if (it == null) {
             SpannableString("")
@@ -62,7 +62,13 @@ class GameViewModel : ViewModel() {
 
 
     init {
+        Log.d("GameFragment", "GameViewModel created!")
         getNextWord()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.d("GameFragment", "GameViewModel destroyed!")
     }
 
     /*
@@ -75,14 +81,14 @@ class GameViewModel : ViewModel() {
 
         while (String(tempWord).equals(currentWord, false)) {
             tempWord.shuffle()
-        }
-        if (wordsList.contains(currentWord)) {
-            getNextWord()
-        } else {
-            Log.d("Unscramble", "currentWord= $currentWord")
-            _currentScrambledWord.value = String(tempWord)
-            _currentWordCount.value = _currentWordCount.value?.inc()
-            wordsList.add(currentWord)
+            }
+            if (wordsList.contains(currentWord)) {
+                getNextWord()
+            } else {
+                _currentScrambledWord = String(tempWord)
+                ++_currentWordCount
+                wordsList.add(currentWord)
+            }
         }
     }
 
@@ -90,18 +96,17 @@ class GameViewModel : ViewModel() {
      * Re-initializes the game data to restart the game.
      */
     fun reinitializeData() {
-        _score.value = 0
-        _currentWordCount.value = 0
+        _score = 0
+        _currentWordCount = 0
         wordsList.clear()
         getNextWord()
-        isGameOver = false
     }
 
     /*
     * Increases the game score if the player’s word is correct.
     */
     private fun increaseScore() {
-        _score.value = _score.value?.plus(SCORE_INCREASE)
+        _score += SCORE_INCREASE
     }
 
     /*
@@ -120,14 +125,14 @@ class GameViewModel : ViewModel() {
     * Returns true if the current word count is less than MAX_NO_OF_WORDS
     */
     fun nextWord(): Boolean {
-        return if (_currentWordCount.value!! < MAX_NO_OF_WORDS) {
+        return if (_currentWordCount < MAX_NO_OF_WORDS) {
             getNextWord()
             true
-        } else {
-            isGameOver = true
-            false
-        }
-    }
+        } else false
 
-    fun isGameOver() = isGameOver
+    }
 }
+
+
+
+
