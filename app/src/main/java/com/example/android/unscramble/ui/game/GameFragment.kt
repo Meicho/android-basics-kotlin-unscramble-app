@@ -56,8 +56,8 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Setup a click listener for the Submit and Skip buttons.
-        binding.submit.setOnClickListener { onSubmitWord() }
-        binding.skip.setOnClickListener { onSkipWord() }
+        binding.submit.setOnClickListener
+        binding.skip.setOnClickListener
         // Update the UI
         updateNextWordOnScreen()
         binding.score.text = getString(R.string.score, 0)
