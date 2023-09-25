@@ -94,6 +94,7 @@ class GameFragment : Fragment() {
         return String(tempWord)
     }
 
+
     /*
      * Re-initializes the data in the ViewModel and updates the views with the new data, to
      * restart the game.
