@@ -59,6 +59,7 @@ class GameViewModel: ViewModel() {
         }
         return false
     }
+
     /*
 * Returns true if the current word count is less than MAX_NO_OF_WORDS.
 * Updates the next word.
