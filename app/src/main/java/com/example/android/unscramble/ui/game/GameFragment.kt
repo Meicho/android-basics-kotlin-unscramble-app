@@ -84,18 +84,7 @@ class GameFragment : Fragment() {
         }
     }
 
-    /*
-     * Skips the current word without changing the score.
-     * Increases the word count.
-     */
-    private fun onSkipWord() {
-        currentScrambledWord = getNextScrambledWord()
-        currentWordCount++
-        binding.wordCount.text = getString(R.string.word_count, currentWordCount, MAX_NO_OF_WORDS)
-        setErrorTextField(false)
-        updateNextWordOnScreen()
-    }
-
+    setErrorTextField() yang meneruskan true
     /*
      * Gets a random word for the list of words and shuffles the letters in it.
      */
