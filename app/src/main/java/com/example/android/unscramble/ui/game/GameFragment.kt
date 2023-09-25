@@ -30,6 +30,7 @@ import com.example.android.unscramble.databinding.GameFragmentBinding
  * Fragment where the game is played, contains the game logic.
  */
 class GameFragment : Fragment() {
+
     private val viewModel: GameViewModel by viewModels()
     private var score = 0
     private var currentWordCount = 0
@@ -70,21 +71,27 @@ class GameFragment : Fragment() {
     * Displays the next scrambled word.
     */
     private fun onSubmitWord() {
-        val playerWord = binding.textInputEditText.text.toString()
-
-        if (viewModel.isUserWordCorrect(playerWord)) {
-            setErrorTextField(false)
-            if (viewModel.nextWord()) {
-                updateNextWordOnScreen()
-            } else {
-                showFinalScoreDialog()
-            }
-        } else {
-            setErrorTextField(true)
-        }
+        currentScrambledWord = getNextScrambledWord()
+        currentWordCount++
+        score += SCORE_INCREASE
+        binding.wordCount.text = getString(R.string.word_count, currentWordCount, MAX_NO_OF_WORDS)
+        binding.score.text = getString(R.string.score, score)
+        setErrorTextField(false)
+        updateNextWordOnScreen()
     }
 
-    setErrorTextField() yang meneruskan true
+    /*
+     * Skips the current word without changing the score.
+     * Increases the word count.
+     */
+    private fun onSkipWord() {
+        currentScrambledWord = getNextScrambledWord()
+        currentWordCount++
+        binding.wordCount.text = getString(R.string.word_count, currentWordCount, MAX_NO_OF_WORDS)
+        setErrorTextField(false)
+        updateNextWordOnScreen()
+    }
+
     /*
      * Gets a random word for the list of words and shuffles the letters in it.
      */
@@ -93,7 +100,6 @@ class GameFragment : Fragment() {
         tempWord.shuffle()
         return String(tempWord)
     }
-
 
     /*
      * Re-initializes the data in the ViewModel and updates the views with the new data, to
@@ -127,7 +133,6 @@ class GameFragment : Fragment() {
             binding.textInputEditText.text = null
         }
     }
-
 
     /*
      * Displays the next scrambled word on screen.
