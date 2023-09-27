@@ -65,8 +65,22 @@ class GameFragment : Fragment() {
         updateNextWordOnScreen()
         binding.score.text = getString(R.string.score, 0)
         binding.wordCount.text = getString(
-                R.string.word_count, 0, MAX_NO_OF_WORDS)
+            R.string.word_count, 0, MAX_NO_OF_WORDS
+        )
+        updateNextWordOnScreen()
+
+        // Observe the currentScrambledWord LiveData.
+        viewModel.currentScrambledWord.observe()
+
+        // Observe the scrambledCharArray LiveData, passing in the LifecycleOwner and the observer.
+        viewModel.currentScrambledWord.observe(viewLifecycleOwner,
+            { newWord ->
+                binding.textViewUnscrambledWord.text = newWord
+            })
+
     }
+
+
 
     /*
     * Checks the user's word, and updates the score accordingly.
