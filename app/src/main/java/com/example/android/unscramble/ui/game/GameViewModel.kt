@@ -37,7 +37,7 @@ class GameViewModel: ViewModel() {
             getNextWord()
         } else {
             _currentScrambledWord = String(tempWord)
-            ++currentWordCount
+            _currentScrambledWord.value = String(tempWord)
             wordsList.add(currentWord)
         }
     }
