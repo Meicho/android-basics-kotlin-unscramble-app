@@ -51,6 +51,8 @@ class GameFragment : Fragment() {
         binding = GameFragmentBinding.inflate(inflater, container, false)
         Log.d("GameFragment", "GameFragment created/re-created!")
         return binding.root
+        Log.d("GameFragment", "Word: ${viewModel.currentScrambledWord} " +
+                "Score: ${viewModel.score} WordCount: ${viewModel.currentWordCount}")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
