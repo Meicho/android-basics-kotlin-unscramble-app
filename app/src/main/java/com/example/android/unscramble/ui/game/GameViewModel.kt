@@ -43,6 +43,16 @@ class GameViewModel: ViewModel() {
     }
 
     /*
+* Re-initializes the game data to restart the game.
+*/
+    fun reinitializeData() {
+        _score = 0
+        _currentWordCount = 0
+        wordsList.clear()
+        getNextWord()
+    }
+
+    /*
     * Increases the game score if the player's word is correct.
     */
     private fun increaseScore() {
