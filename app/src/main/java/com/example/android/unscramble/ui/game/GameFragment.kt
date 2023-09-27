@@ -74,7 +74,7 @@ class GameFragment : Fragment() {
         updateNextWordOnScreen()
 
         // Observe the currentScrambledWord LiveData.
-        viewModel.currentScrambledWord.observe()
+
 
         // Observe the scrambledCharArray LiveData, passing in the LifecycleOwner and the observer.
         viewModel.score.observe(viewLifecycleOwner,
